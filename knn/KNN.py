@@ -35,6 +35,14 @@ def classify(in_x, group, labels, k):
     return sorted_class_count[0][0]
 
 
+def figure(x, y):
+    import matplotlib.pyplot as plt
+    fig = plt.figure()
+    ax = fig.add_subplot(111)
+    ax.scatter(x, y)
+    plt.show()
+
+
 if __name__ == '__main__':
     group, labels = create_data_set()
-    print classify([0, 0], group, labels, 3)
+    figure(group[:, 0], group[:, 1])
