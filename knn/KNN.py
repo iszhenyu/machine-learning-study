@@ -4,12 +4,12 @@
 @time: 2017/4/8 下午10:49
 """
 from __future__ import unicode_literals
-from numpy import *
+import numpy as np
 import operator
 
 
 def create_data_set():
-    group = array([
+    group = np.array([
         [1.0, 1.1],
         [1.0, 1.0],
         [0, 0],
@@ -21,7 +21,7 @@ def create_data_set():
 
 def classify(in_x, group, labels, k):
     data_set_size = group.shape[0]
-    diff_mat = tile(in_x, (data_set_size, 1)) - group
+    diff_mat = np.tile(in_x, (data_set_size, 1)) - group
     sq_diff_mat = diff_mat ** 2
     sq_distances = sq_diff_mat.sum(axis=1)
     distances = sq_distances ** 0.5
