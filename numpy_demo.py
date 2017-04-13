@@ -95,7 +95,55 @@ def struct_array():
     a = np.array([("Zhang", 32, 75.5), ("Wang", 24, 65.2)],
                  dtype=persontype)
     print a
+    print a.dtype
 
+
+def triangle_wave(x, c, c0, hc):
+    x = x - int(x)  # 三角波的周期为1，因此只取x坐标的小数部分进行计算
+    if x >= c:
+        r = 0.0
+    elif x < c0:
+        r = x / c0 * hc
+    else:
+        r = (c - x) / (c - c0) * hc
+    return r
+
+
+def triangle_func(c, c0, hc):
+    def trifunc(x):
+        x = x - int(x) # 三角波的周期为1，因此只取x坐标的小数部分进行计算
+        if x >= c: r = 0.0
+        elif x < c0: r = x / c0 * hc
+        else: r = (c-x) / (c-c0) * hc
+        return r
+
+    # 用trifunc函数创建一个ufunc函数，可以直接对数组进行计算, 不过通过此函数
+    # 计算得到的是一个Object数组，需要进行类型转换
+    return np.frompyfunc(trifunc, 1, 1)
+
+
+def ufunc_demo():
+    # x = np.linspace(0, 2*np.pi, 10)
+    # print x
+    # y = np.sin(x)
+    # print y
+    #
+    # a = np.arange(0, 4)
+    # b = np.arange(1, 5)
+    # print np.add(a, b)
+    # print a + b
+
+    x = np.linspace(0, 2, 1000)
+    # print x
+    # y = np.array([triangle_wave(t, 0.6, 0.4, 1.0) for t in x])
+    # print y
+
+    # triangle_ufunc = np.frompyfunc(lambda v: triangle_wave(v, 0.6, 0.4, 1.0), 1, 1)
+    # y2 = triangle_ufunc(x)
+    # print y2
+
+    y2 = triangle_func(0.6, 0.4, 1.0)(x)
+    print y2
 
 if __name__ == '__main__':
-    struct_array()
+    ufunc_demo()
