@@ -10,22 +10,38 @@ import operator
 
 def create_data_set():
     group = np.array([
-        [1.0, 1.1],
+        [1.0, 1.2],
         [1.0, 1.0],
-        [0, 0],
-        [0, 0.1]
+        [0.1, 0],
+        [0.2, 0.1]
     ])
     labels = ['A', 'A', 'B', 'B']
     return group, labels
 
 
+def auto_norm(data_set):
+    """
+    归一化特征值
+    :param data_set:
+    :return:
+    """
+    min_vals = data_set.min(0)
+    max_vals = data_set.max(0)
+    ranges = max_vals - min_vals
+    data_size = data_set.shape[0]
+    norm_data_set = data_set - np.tile(min_vals, (data_size, 1))
+    norm_data_set = norm_data_set / np.tile(ranges, (data_size, 1))
+    return norm_data_set
+
+
 def classify(in_data, data_set, data_labels, k):
+    norm_data_set = auto_norm(data_set)
     # 获取样本数据的数量
-    data_set_size = data_set.shape[0]
+    data_set_size = norm_data_set.shape[0]
     # 对输入数据在列上复制data_set_size份
     in_data_matrix = np.tile(in_data, (data_set_size, 1))
     # 计算输入数据与样本数据的差值
-    diff_mat = in_data_matrix - data_set
+    diff_mat = in_data_matrix - norm_data_set
     # 对矩阵的每个元素进行平方处理
     sq_diff_mat = diff_mat ** 2
     # 对矩阵的每行求和, 结果是一个数组
