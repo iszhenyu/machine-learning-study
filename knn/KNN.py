@@ -19,19 +19,30 @@ def create_data_set():
     return group, labels
 
 
-def classify(in_x, group, labels, k):
-    data_set_size = group.shape[0]
-    diff_mat = np.tile(in_x, (data_set_size, 1)) - group
+def classify(in_data, data_set, data_labels, k):
+    # 获取样本数据的数量
+    data_set_size = data_set.shape[0]
+    # 对输入数据在列上复制data_set_size份
+    in_data_matrix = np.tile(in_data, (data_set_size, 1))
+    # 计算输入数据与样本数据的差值
+    diff_mat = in_data_matrix - data_set
+    # 对矩阵的每个元素进行平方处理
     sq_diff_mat = diff_mat ** 2
+    # 对矩阵的每行求和, 结果是一个数组
     sq_distances = sq_diff_mat.sum(axis=1)
+    # 对数组每个元素开方处理
     distances = sq_distances ** 0.5
-    sorted_distances = distances.argsort()
+    # distances排序后每个元素在原数组中所处的位置下标
+    sorted_distance_indexes = distances.argsort()
 
-    class_count = {}
+    # 统计排名前k
+    classify_count = {}
     for i in range(k):
-        vote_label = labels[sorted_distances[i]]
-        class_count[vote_label] = class_count.get(vote_label, 0) + 1
-    sorted_class_count = sorted(class_count.iteritems(), key=operator.itemgetter(1), reverse=True)
+        vote_label = data_labels[sorted_distance_indexes[i]]
+        classify_count[vote_label] = classify_count.get(vote_label, 0) + 1
+
+    # 将分类按匹配次数从大到小排列
+    sorted_class_count = sorted(classify_count.iteritems(), key=operator.itemgetter(1), reverse=True)
     return sorted_class_count[0][0]
 
 
@@ -45,4 +56,5 @@ def figure(x, y):
 
 if __name__ == '__main__':
     group, labels = create_data_set()
-    figure(group[:, 0], group[:, 1])
+    # figure(group[:, 0], group[:, 1])
+    print classify([1.0, 0.2], group, labels, 3)
