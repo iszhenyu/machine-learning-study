@@ -46,15 +46,6 @@ def classify(in_data, data_set, data_labels, k):
     return sorted_class_count[0][0]
 
 
-def figure(x, y):
-    import matplotlib.pyplot as plt
-    fig = plt.figure()
-    ax = fig.add_subplot(111)
-    ax.scatter(x, y)
-    plt.show()
-
-
 if __name__ == '__main__':
     group, labels = create_data_set()
-    # figure(group[:, 0], group[:, 1])
     print classify([1.0, 0.2], group, labels, 3)
