@@ -145,5 +145,13 @@ def ufunc_demo():
     y2 = triangle_func(0.6, 0.4, 1.0)(x)
     print y2
 
+
+def matrix_demo():
+    a = np.matrix([[1, 2, 3], [5, 5, 6], [7, 9, 9]])
+    print a
+    a = a * a ** -1
+    print a
+
+
 if __name__ == '__main__':
-    ufunc_demo()
+    matrix_demo()
