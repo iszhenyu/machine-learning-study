@@ -131,3 +131,16 @@ def classify(input_tree, labels, test_vec):
                 class_label = second_dict[key]
     return class_label
 
+
+def store_tree(input_tree, filename):
+    import pickle
+    fw = open(filename, 'w')
+    pickle.dump(input_tree, fw)
+    fw.close()
+
+
+def grab_tree(filename):
+    import pickle
+    fr = open(filename)
+    return pickle.load(fr)
+
