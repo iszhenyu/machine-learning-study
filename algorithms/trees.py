@@ -110,3 +110,24 @@ def create_tree(data_set, labels):
         sub_labels = labels[:]
         tree[best_label][val] = create_tree(split_data_set(data_set, best_feature, val), sub_labels)
     return tree
+
+
+def classify(input_tree, labels, test_vec):
+    """
+    使用决策树分类
+    :param input_tree:
+    :param labels:
+    :param test_vec:
+    :return:
+    """
+    first_str = input_tree.keys()[0]
+    second_dict = input_tree[first_str]
+    feature_index = labels.index(first_str)
+    for key in second_dict.keys():
+        if test_vec[feature_index] == key:
+            if type(second_dict[key]).__name__ == 'dict':
+                class_label = classify(second_dict[key], labels, test_vec)
+            else:
+                class_label = second_dict[key]
+    return class_label
+
