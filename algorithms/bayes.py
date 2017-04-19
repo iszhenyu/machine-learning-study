@@ -25,5 +25,6 @@ def words_2_vec(vocab_list, input_data):
 
 
 def train_nbo(train_matrix, train_category):
-    pass
-
+    num_train_docs = len(train_matrix)
+    num_words_per_doc = len(train_matrix[0])
+    
