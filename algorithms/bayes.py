@@ -4,6 +4,7 @@
 @time: 2017/4/18 下午6:19
 """
 from __future__ import unicode_literals
+import numpy as np
 
 
 def create_vocab_list(data_set):
@@ -14,10 +15,14 @@ def create_vocab_list(data_set):
 
 
 def words_2_vec(vocab_list, input_data):
-    return_vec = [0] * len(vocab_list)
+    vec = [0] * len(vocab_list)
     for word in input_data:
         if word in vocab_list:
-            return_vec[vocab_list.index(word)] = 1
+            vec[vocab_list.index(word)] = 1
         else:
             print 'the word: %s is not in Vocabulary' % word
-    return return_vec
+    return vec
+
+
+ def train_nbo(train_matrix, train_category):
+     pass
