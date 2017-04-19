@@ -24,5 +24,6 @@ def words_2_vec(vocab_list, input_data):
     return vec
 
 
- def train_nbo(train_matrix, train_category):
-     pass
+def train_nbo(train_matrix, train_category):
+    pass
+
