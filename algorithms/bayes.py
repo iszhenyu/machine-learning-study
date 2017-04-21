@@ -5,6 +5,7 @@
 """
 from __future__ import unicode_literals
 import numpy as np
+import math
 
 
 def create_vocab_list(data_set):
@@ -35,10 +36,11 @@ def train_nbo(train_matrix, train_category):
     num_words_per_doc = len(train_matrix[0])
     prob_abusive = sum(train_category) / float(num_train_docs)
 
-    p1_num = np.zeros(num_words_per_doc)
-    p0_num = np.zeros(num_words_per_doc)
-    p1_demon = 0.0
-    p0_demon = 0.0
+    # 这里不用np.zeros 是因为p(w|c)可能为0, 相乘后分子会为0
+    p1_num = np.ones(num_words_per_doc)
+    p0_num = np.ones(num_words_per_doc)
+    p1_demon = 2.0
+    p0_demon = 2.0
     for i in range(num_train_docs):
         if train_category[i] == 1:
             p1_num += train_matrix[i]
@@ -46,8 +48,9 @@ def train_nbo(train_matrix, train_category):
         else:
             p0_num += train_matrix[i]
             p0_demon += sum(train_matrix[i])
-    p1_vec = p1_num / p1_demon
-    p0_vec = p0_num / p0_demon
+    # 通过求对数, 避免下溢或浮点数舍入导致的错误
+    p1_vec = math.log(p1_num / p1_demon)
+    p0_vec = math.log(p0_num / p0_demon)
     return p0_vec, p1_vec, prob_abusive
 
 
