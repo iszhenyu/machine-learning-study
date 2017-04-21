@@ -54,6 +54,12 @@ def train_nbo(train_matrix, train_category):
     return p0_vec, p1_vec, prob_abusive
 
 
+def classify(vec_2_classify, p0_vec, p1_vec, p_class_1):
+    p1 = sum(vec_2_classify * p1_vec) + math.log(p_class_1)
+    p0 = sum(vec_2_classify * p0_vec) + math.log(1.0 - p_class_1)
+    return 1 if p1 > p0 else 0
+
+
 if __name__ == '__main__':
     a = np.zeros(5)
     a += [1, 1, 1, 1, 0]
