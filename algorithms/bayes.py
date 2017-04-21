@@ -9,13 +9,18 @@ import math
 
 
 def create_vocab_list(data_set):
+    """
+    创建不重复词的词汇表
+    :param data_set:
+    :return:
+    """
     vocab_set = set([])
     for item in data_set:
         vocab_set = vocab_set | set(item)
     return list(vocab_set)
 
 
-def set_of_words_2_vec(vocab_list, input_data):
+def a_set_of_words_2_vec(vocab_list, input_data):
     """
     词集模型
     :param vocab_list:
@@ -31,7 +36,7 @@ def set_of_words_2_vec(vocab_list, input_data):
     return vec
 
 
-def big_of_words_2_vec(vocab_list, input_set):
+def a_big_of_words_2_vec(vocab_list, input_set):
     """
     词袋模型
     :param vocab_list:
