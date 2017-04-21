@@ -15,13 +15,33 @@ def create_vocab_list(data_set):
     return list(vocab_set)
 
 
-def words_2_vec(vocab_list, input_data):
+def set_of_words_2_vec(vocab_list, input_data):
+    """
+    词集模型
+    :param vocab_list:
+    :param input_data:
+    :return:
+    """
     vec = [0] * len(vocab_list)
     for word in input_data:
         if word in vocab_list:
             vec[vocab_list.index(word)] = 1
         else:
             print 'the word: %s is not in Vocabulary' % word
+    return vec
+
+
+def big_of_words_2_vec(vocab_list, input_set):
+    """
+    词袋模型
+    :param vocab_list:
+    :param input_set:
+    :return:
+    """
+    vec = [0] * len(vocab_list)
+    for word in input_set:
+        if word in vocab_list:
+            vec[vocab_list.index(word)] += 1
     return vec
 
 
