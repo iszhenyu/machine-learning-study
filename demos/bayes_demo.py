@@ -5,6 +5,10 @@
 """
 from __future__ import unicode_literals
 
+from algorithms import bayes
+import numpy as np
+import math
+
 
 def create_data():
     posting_list = [
@@ -20,4 +24,18 @@ def create_data():
 
 
 if __name__ == '__main__':
-    pass
+    post_list, class_list = create_data()
+    vocab_list = bayes.create_vocab_list(post_list)
+    train_mat = []
+    for post in post_list:
+        train_mat.append(bayes.a_set_of_words_2_vec(vocab_list, post))
+    p0_v, p1_v, p_ab = bayes.train_nbo(np.array(train_mat), np.array(class_list))
+
+    test_entry = ['love', 'my', 'dalmation']
+    test_doc = np.array(bayes.a_set_of_words_2_vec(vocab_list, test_entry))
+    print bayes.classify(test_doc, p0_v, p1_v, p_ab)
+
+    test_entry = ['stupid', 'my', 'garbage']
+    test_doc = np.array(bayes.a_set_of_words_2_vec(vocab_list, test_entry))
+    print bayes.classify(test_doc, p0_v, p1_v, p_ab)
+

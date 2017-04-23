@@ -5,7 +5,6 @@
 """
 from __future__ import unicode_literals
 import numpy as np
-import math
 
 
 def create_vocab_list(data_set):
@@ -74,18 +73,12 @@ def train_nbo(train_matrix, train_category):
             p0_num += train_matrix[i]
             p0_demon += sum(train_matrix[i])
     # 通过求对数, 避免下溢或浮点数舍入导致的错误
-    p1_vec = math.log(p1_num / p1_demon)
-    p0_vec = math.log(p0_num / p0_demon)
+    p1_vec = np.log(p1_num / p1_demon)
+    p0_vec = np.log(p0_num / p0_demon)
     return p0_vec, p1_vec, prob_abusive
 
 
 def classify(vec_2_classify, p0_vec, p1_vec, p_class_1):
-    p1 = sum(vec_2_classify * p1_vec) + math.log(p_class_1)
-    p0 = sum(vec_2_classify * p0_vec) + math.log(1.0 - p_class_1)
+    p1 = sum(vec_2_classify * p1_vec) + np.log(p_class_1)
+    p0 = sum(vec_2_classify * p0_vec) + np.log(1.0 - p_class_1)
     return 1 if p1 > p0 else 0
-
-
-if __name__ == '__main__':
-    a = np.zeros(5)
-    a += [1, 1, 1, 1, 0]
-    print a
