@@ -7,7 +7,6 @@ from __future__ import unicode_literals
 
 from algorithms import bayes
 import numpy as np
-import math
 
 
 def create_data():
