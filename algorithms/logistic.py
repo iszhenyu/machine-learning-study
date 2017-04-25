@@ -25,9 +25,9 @@ def grad_ascent(data_mat_in, class_labels_in):
     max_cycle = 500
     weights = np.ones((n, 1))
     for i in range(max_cycle):
-        h = sigmoid(data_mat * weights)
-        error = label_mat - h
-        weights = weights + alpha * data_mat.transpose() * error
+        h = sigmoid(data_mat * weights)  # 计算当前系数下的值
+        error = label_mat - h  # 跟实际结果的差值
+        weights = weights + alpha * data_mat.transpose() * error  # 调整系数
     return weights
 
 
